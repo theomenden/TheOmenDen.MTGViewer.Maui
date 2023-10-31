@@ -1,11 +1,6 @@
 ﻿using MTGViewer.Maui.Data;
 using Polly.Extensions.Http;
 using Polly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MTGViewer.Maui.Data.Scryfall.ApiAccess;
 using TheOmenDen.Shared.Interfaces.Services;
 
@@ -16,11 +11,11 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddScryfallApiServices(this IServiceCollection services)
     {
-        services.AddTransient<ScryfallCardService>();
-        services.AddTransient<ScryfallSymbologyService>();
-        services.AddTransient<ScryfallSetInformationService>();
+        services.AddScoped<ScryfallCardService>();
+        services.AddScoped<ScryfallSymbologyService>();
+        services.AddScoped<ScryfallSetInformationService>();
 
-        AddTheOmenDenHttpServices(services,
+        AddTheOmenDenHttpServices<ScryfallCardService>(services,
             new HttpClientConfiguration
             {
                 BaseAddress = ScryfallApiEndpoint,
@@ -30,8 +25,18 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddTheOmenDenHttpServices(IServiceCollection services, HttpClientConfiguration httpClientConfiguration)
+
+    /// <summary>
+    /// Adds Basic Api interaction via <see cref="ApiServiceBase{T}"/>
+    /// </summary>
+    /// <typeparam name="T">The containing DI type</typeparam>
+    /// <param name="services">The existing service collection</param>
+    /// <param name="httpClientConfiguration">Configuration for the named client</param>
+    /// <returns>The same <see cref="IServiceCollection"/> for further chaining</returns>
+    public static IServiceCollection AddTheOmenDenHttpServices<T>(this IServiceCollection services, HttpClientConfiguration httpClientConfiguration)
     {
+        var containerType = typeof(T);
+
         services.AddOptions<HttpClientConfiguration>()
             .Configure(options =>
             {
@@ -46,7 +51,10 @@ public static class ServiceCollectionExtensions
             .AddPolicyHandler(GetRetryPolicy())
             .AddPolicyHandler(GetCircuitBreakerPolicy());
 
-        services.AddScoped(typeof(IApiService<>), typeof(ApiServiceBase<>));
+        services.Scan(scan => scan
+            .FromAssembliesOf(typeof(IApiService), containerType)
+            .AddClasses(c => c.AssignableTo(typeof(ApiServiceBase<>)))
+            .AsImplementedInterfaces());
 
         return services;
     }

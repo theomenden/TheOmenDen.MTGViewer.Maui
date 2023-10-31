@@ -3,6 +3,7 @@ using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Microsoft.Extensions.Logging;
 using MTGViewer.Maui.Data;
+using MTGViewer.Maui.Extensions;
 using Serilog;
 using Serilog.Events;
 
@@ -42,6 +43,7 @@ public static class MauiProgram
                 .AddBootstrap5Providers()
                 .AddBootstrap5Components()
                 .AddFontAwesomeIcons();
+            builder.Services.AddScryfallApiServices();
             builder.Services.AddSingleton<WeatherForecastService>();
 
             return builder.Build();

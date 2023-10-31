@@ -1,0 +1,40 @@
+﻿@page "/contactUs"
+<Div Margin="Margin.IsAuto.OnX" Padding="Padding.Is5.OnX" Width="Width.Is75">
+    <Heading Size="HeadingSize.Is2" Margin="Margin.Is3.FromBottom" TextAlignment="TextAlignment.Center">
+        Contact us
+    </Heading>
+    <Paragraph Margin="Margin.Is5.FromBottom" TextAlignment="TextAlignment.Center">
+        Facing a tech glitch? Interested in sharing thoughts on our beta feature? Curious about our Business plan details? We're here to help.
+    </Paragraph>
+    <Form>
+        <Field>
+            <FieldLabel>
+                Your email
+            </FieldLabel>
+            <FieldBody>
+                <TextEdit Placeholder="name@example.com" />
+            </FieldBody>
+        </Field>
+        <Field>
+            <FieldLabel>
+                Subject
+            </FieldLabel>
+            <FieldBody>
+                <TextEdit Placeholder="Let us know what you need" />
+            </FieldBody>
+        </Field>
+        <Field>
+            <FieldLabel>
+                Message
+            </FieldLabel>
+            <FieldBody>
+                <MemoEdit Placeholder="Leave a comment..." Rows="5" />
+            </FieldBody>
+        </Field>
+        <Field>
+            <Button Color="Color.Primary">
+                Send message
+            </Button>
+        </Field>
+    </Form>
+</Div>
