@@ -1,0 +1,39 @@
+﻿<Bar Mode="BarMode.VerticalPopout"
+     CollapseMode="BarCollapseMode.Small"
+     ThemeContrast="ThemeContrast.Dark"
+     Background="Background.Dark"
+     NavigationBreakpoint="Breakpoint.Tablet">
+    <BarBrand>
+        <BarItem>
+            <BarLink To="">
+                <BarIcon IconName="IconName.Dashboard"/>
+                MTG Viewer
+            </BarLink>
+        </BarItem>
+    </BarBrand>
+    <BarToggler />
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="">
+                    <BarIcon IconName="IconName.Home" IconStyle="IconStyle.DuoTone" />
+                    Home
+                </BarLink>
+            </BarItem>
+
+            <BarItem>
+                <BarLink To="my-collection">
+                    <BarIcon IconName="@("fa-rectangle-history-circle-user")" IconStyle="IconStyle.Regular" />
+                    Your Collection
+                </BarLink>
+            </BarItem>
+
+            <BarItem>
+                <BarLink To="cards">
+                    <BarIcon IconName="@("fa-cards-blank")" IconStyle="IconStyle.DuoTone" />
+                    Cards
+                </BarLink>
+            </BarItem>
+        </BarStart>
+    </BarMenu>
+</Bar>
