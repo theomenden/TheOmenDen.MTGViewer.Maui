@@ -1,10 +1,12 @@
 ﻿using System.Text.Json.Serialization;
+using SQLite;
 
 namespace MTGViewer.Maui.Data.Scryfall.Models;
 public sealed class ScryfallCard
 {
     public string _object { get; set; }
 
+    
     [JsonPropertyName("id")]
     public Guid Id { get; set; }
     public string oracle_id { get; set; }
@@ -71,4 +73,9 @@ public sealed class ScryfallCard
     public Prices prices { get; set; }
     public RelatedUris related_uris { get; set; }
     public PurchaseUris purchase_uris { get; set; }
+
+    [AutoIncrement]
+    [PrimaryKey]
+    [JsonIgnore]
+    public int DatabaseId { get; set; }
 }

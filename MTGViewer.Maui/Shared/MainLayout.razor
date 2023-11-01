@@ -7,10 +7,26 @@
         </LayoutSiderContent>
     </LayoutSider>
     <Layout>
-        <LayoutHeader> 
+        <LayoutHeader>
+            <Bar Mode="BarMode.Horizontal"
+                 CollapseMode="BarCollapseMode.Hide"
+                 Breakpoint="Breakpoint.Mobile"
+                 NavigationBreakpoint="Breakpoint.Mobile"
+                 ThemeContrast="ThemeContrast.Dark"
+                 Background="Background.Dark"
+                 Flex="Flex.JustifyContent.Center">
+                <BarBrand>
+                    <BarItem TextSize="TextSize.Heading4">
+                        <BarIcon IconName="@("fa-crow fa-bounce fa-lg")" IconStyle="IconStyle.DuoTone"/>
+                        The Omen Den
+                    </BarItem>
+                </BarBrand>
+                </Bar>
         </LayoutHeader>
         <LayoutContent>
+            <LoadingIndicator FullScreen>
             @Body
+            </LoadingIndicator>
         </LayoutContent>
     </Layout>
 </Layout>

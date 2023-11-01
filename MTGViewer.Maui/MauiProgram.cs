@@ -1,6 +1,8 @@
 ﻿using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using Blazorise.LoadingIndicator;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MTGViewer.Maui.Data;
 using MTGViewer.Maui.Extensions;
@@ -13,18 +15,14 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.FromLogContext()
             .Enrich.WithThreadId()
             .Enrich.WithProcessName()
             .Enrich.WithEnvironmentUserName()
             .Enrich.WithMemoryUsage()
-            .WriteTo.Async(a =>
-            {
-                a.File("./logs/log-.txt", rollingInterval: RollingInterval.Day);
-                a.Console();
-                a.BrowserConsole();
-            })
+            .WriteTo.Debug()
+            .WriteTo.BrowserConsole()
             .CreateBootstrapLogger();
         try
         {
@@ -43,9 +41,12 @@ public static class MauiProgram
                 .AddBootstrap5Providers()
                 .AddBootstrap5Components()
                 .AddFontAwesomeIcons();
+            builder.Services.AddLoadingIndicator();
             builder.Services.AddScryfallApiServices();
-            builder.Services.AddSingleton<WeatherForecastService>();
-
+            
+            // TODO: Fix this shit
+            //builder.Services.AddPooledDbContextFactory<MtgBlazorDbContext>(options => options.EnableServiceProviderCaching().EnableDetailedErrors()
+            //    .UseSqlite(SqlLiteConstants.DatabasePath));
             return builder.Build();
         }
         catch (Exception ex)

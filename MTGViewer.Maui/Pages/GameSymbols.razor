@@ -1,14 +1,8 @@
 ﻿@page "/symbols"
 @using OperationResult = TheOmenDen.Shared.Enumerations.OperationResult
-@using TheOmenDen.Shared.Extensions
-@using TheOmenDen.Shared.Responses
 <Tabs RenderMode="TabsRenderMode.LazyReload"
       SelectedTab="@_selectedTab"
       SelectedTabChanged="@OnSelectedTabChangedAsync"
-      Background="Background.Dark"
-      TextColor="TextColor.Light"
-      Flex="Flex.Row.AlignContent.Between"
-      Margin="Margin.Is1.FromTop.OnFullHD.Is3.FromTop.OnMobile"
       FullWidth>
     <Items>
         <Tab Name="manaCosts"
@@ -38,103 +32,156 @@
         </Tab>
     </Items>
     <Content>
-        <TabPanel Name="manaCosts" Background="Background.Dark" TextColor="TextColor.Light">
+        <TabPanel Name="manaCosts"
+                  Height="Height.Is100"
+                  ElementId="#manacostspanel-animate">
             <CardDeck>
                 <Repeater TItem="SymbologyDatum" Items="@_manaCostSymbols" Context="manaSymbolContext">
-                    <Card Width="Width.Auto" Shadow="Shadow.Default" Margin="Margin.IsAuto.OnX.Is2.OnY" Padding="Padding.Is2.OnX">
+                    <Animate Anchor="#manacostspanel-animate"
+                             Auto
+                             Animation="@Animations.SlideUp"
+                              DelayMilliseconds="@(500 + (_funnySymbols.IndexOf(manaSymbolContext)* 50))">
+                    <Card Shadow="Shadow.Default"
+                          Margin="Margin.Is3.OnX.Is4.OnY"
+                          Padding="Padding.Is2.OnX.Is3.OnY"
+                          Border="Border.Is2.Secondary.OnAll.Rounded">
                         <CardBody>
                             <CardTitle TextColor="TextColor.Dark" Size="3">@manaSymbolContext.Symbol</CardTitle>
-                            <CardSubtitle TextColor="TextColor.Muted">@manaSymbolContext.English</CardSubtitle>
+                            <CardSubtitle TextColor="TextColor.Muted"
+                                          TextTransform="TextTransform.Capitalize">@manaSymbolContext.English</CardSubtitle>
                             <CardImage data-src="@manaSymbolContext.SvgUri"
                                        data-sizes="auto"
-                                       Style="height:48px;width:48px;"
+                                       Style="height:64px;width:64px;"
                                        Alt="@manaSymbolContext.English"
                                        Class="lazyload" />
                         </CardBody>
                     </Card>
+                    </Animate>
                 </Repeater>
             </CardDeck>
         </TabPanel>
-        <TabPanel Name="manaRepresentatives" Background="Background.Dark" TextColor="TextColor.Light">
+        <TabPanel Name="manaRepresentatives"
+                  Height="Height.Is100"
+                  ElementId="#manarepresentables-panel">
             <CardDeck>
-                 <Repeater TItem="SymbologyDatum" Items="@_manaSymbols" Context="manaRepresentativeContext">
-                    <Card Width="Width.Auto" Shadow="Shadow.Default" Margin="Margin.IsAuto.OnX.Is2.OnY" Padding="Padding.Is2.OnX">
+                <Repeater TItem="SymbologyDatum" Items="@_manaSymbols" Context="manaRepresentativeContext">
+                    <Animate Anchor="#manarepresentables-animate"
+                             Auto
+                             Animation="@Animations.SlideUp"
+                              DelayMilliseconds="@(500 + (_funnySymbols.IndexOf(manaRepresentativeContext)* 50))">
+                    <Card Shadow="Shadow.Default"
+                          Margin="Margin.Is3.OnX.Is4.OnY"
+                          Padding="Padding.Is2.OnX.Is3.OnY"
+                          Border="Border.Is2.Secondary.OnAll.Rounded">
                         <CardBody>
-                             <CardTitle TextColor="TextColor.Dark" Size="3">@manaRepresentativeContext.Symbol</CardTitle>
-                             <CardSubtitle TextColor="TextColor.Muted">@manaRepresentativeContext.English</CardSubtitle>
-                             <CardImage data-src="@manaRepresentativeContext.SvgUri"
+                            <CardTitle TextColor="TextColor.Dark" Size="3">@manaRepresentativeContext.Symbol</CardTitle>
+                            <CardSubtitle TextColor="TextColor.Muted"
+                                          TextTransform="TextTransform.Capitalize">@manaRepresentativeContext.English</CardSubtitle>
+                            <CardImage data-src="@manaRepresentativeContext.SvgUri"
                                        data-sizes="auto"
-                                       Style="height:48px;width:48px;"
+                                       Style="height:64px;width:64px;"
                                        Alt="@manaRepresentativeContext.English"
                                        Class="lazyload" />
                         </CardBody>
                     </Card>
+                    </Animate>
                 </Repeater>
             </CardDeck>
         </TabPanel>
-         <TabPanel Name="transposables" Background="Background.Dark" TextColor="TextColor.Light" Width="Width.Is100">
-             <Container Fluid>
-                 <CardDeck>
-                    <Repeater TItem="SymbologyDatum" Items="@_transposableSymbols" Context="transposableContext">
-                        <Card Width="Width.Auto" Shadow="Shadow.Default" Margin="Margin.IsAuto.OnX.Is2.OnY" Padding="Padding.Is2.OnX">
-                             <CardBody>
-                                 <CardTitle TextColor="TextColor.Dark" Size="3">@transposableContext.Symbol</CardTitle>
-                                <CardSubtitle TextColor="TextColor.Muted">@transposableContext.English</CardSubtitle>
-                                 <CardImage data-src="@transposableContext.SvgUri"
-                                            data-sizes="auto"
-                                            Style="height:48px;width:48px;"
-                                            Alt="@transposableContext.English"
-                                            Class="lazyload" />
-                             </CardBody>
-                         </Card>
-                     </Repeater>
-                 </CardDeck>
-             </Container>
-         </TabPanel>
-        <TabPanel Name="funny" Background="Background.Dark" TextColor="TextColor.Light">
-            <Container Fluid>
-                <CardDeck>
-                    <Repeater TItem="SymbologyDatum" Items="@_funnySymbols" Context="funnyContext">
-                        <Card Width="Width.Auto" Shadow="Shadow.Default" Margin="Margin.IsAuto.OnX.Is2.OnY" Padding="Padding.Is2.OnX">
-                            <CardBody>
-                                <CardTitle TextColor="TextColor.Dark" Size="3">@funnyContext.Symbol</CardTitle>
-                                <CardSubtitle TextColor="TextColor.Muted">@funnyContext.English</CardSubtitle>
-                                <CardImage data-src="@funnyContext.SvgUri"
-                                           data-sizes="auto"
-                                           Style="height:48px;width:48px;"
-                                           Alt="@funnyContext.English"
-                                           Class="lazyload" />
-                            </CardBody>
-                        </Card>
-                    </Repeater>
-                </CardDeck>
-            </Container>
-        </TabPanel>
-        <TabPanel Name="other" Background="Background.Dark" TextColor="TextColor.Light">
+        <TabPanel Name="transposables"
+                  Height="Height.Is100"
+                  ElementId="transposablespanel-animate">
             <CardDeck>
-                <Repeater TItem="SymbologyDatum" Items="@_otherSymbols" Context="miscContext">
-                    <Card Width="Width.Auto" Shadow="Shadow.Default" Margin="Margin.IsAuto.OnX.Is2.OnY" Padding="Padding.Is2.OnX">
+                <Repeater TItem="SymbologyDatum" Items="@_transposableSymbols" Context="transposableContext">
+                    <Animate Anchor="#funnypanel-animate"
+                             Auto
+                             Animation="@Animations.SlideUp"
+                             DelayMilliseconds="@(500 + (_funnySymbols.IndexOf(transposableContext)* 50))">
+                    <Card Shadow="Shadow.Default"
+                          Margin="Margin.Is3.OnX.Is4.OnY"
+                          Padding="Padding.Is2.OnX.Is3.OnY"
+                          Border="Border.Is2.Secondary.OnAll.Rounded">
                         <CardBody>
-                            <CardTitle TextColor="TextColor.Dark" Size="3">@miscContext.Symbol</CardTitle>
-                            <CardSubtitle TextColor="TextColor.Muted">@miscContext.English</CardSubtitle>
-                            <CardImage data-src="@miscContext.SvgUri"
+                            <CardTitle TextColor="TextColor.Dark" Size="3">@transposableContext.Symbol</CardTitle>
+                            <CardSubtitle TextColor="TextColor.Muted"
+                                          TextTransform="TextTransform.Capitalize">@transposableContext.English</CardSubtitle>
+                            <CardImage data-src="@transposableContext.SvgUri"
                                        data-sizes="auto"
-                                       Style="height:48px;width:48px;"
-                                       Alt="@miscContext.English"
+                                       Style="height:64px;width:64px;"
+                                       Alt="@transposableContext.English"
                                        Class="lazyload" />
                         </CardBody>
                     </Card>
+                    </Animate>
                 </Repeater>
             </CardDeck>
+        </TabPanel>
+        <TabPanel Name="funny"
+                  Height="Height.Is100"
+                  ElementId="#funnypanel-animate">
+            <CardDeck>
+                <Repeater TItem="SymbologyDatum" Items="@_funnySymbols" Context="funnyContext">
+                    <Animate Anchor="#funnypanel-animate"
+                              Auto
+                              Animation="@Animations.SlideLeft"
+                              DelayMilliseconds="@(500 + (_funnySymbols.IndexOf(funnyContext)* 50))">
+                         <Card Shadow="Shadow.Default"
+                               Margin="Margin.Is3.OnX.Is4.OnY"
+                               Padding="Padding.Is2.OnX.Is3.OnY"
+                               Border="Border.Is2.Secondary.OnAll.Rounded">
+                             <CardBody>
+                                 <CardTitle TextColor="TextColor.Dark" Size="3">@funnyContext.Symbol</CardTitle>
+                                 <CardSubtitle TextColor="TextColor.Muted"
+                                               TextTransform="TextTransform.Capitalize">@funnyContext.English</CardSubtitle>
+                                 <CardImage data-src="@funnyContext.SvgUri"
+                                            data-sizes="auto"
+                                            Style="height:64px;width:64px;"
+                                            Alt="@funnyContext.English"
+                                            Class="lazyload" />
+                             </CardBody>
+                         </Card>
+                     </Animate>
+                 </Repeater>
+             </CardDeck>
+         </TabPanel>
+         <TabPanel Name="other"
+                   Height="Height.Is100"
+                   ElementId="#other-animate">
+             <CardDeck>
+                 <Repeater TItem="SymbologyDatum" Items="@_otherSymbols" Context="miscContext">
+                     <Animate Anchor="#other-animate"
+                              Auto
+                              Animation="@Animations.SlideLeft"
+                              DelayMilliseconds="@(500 + (_funnySymbols.IndexOf(miscContext)* 50))">
+                     <Card Shadow="Shadow.Default"
+                           Margin="Margin.Is3.OnX.Is4.OnY"
+                           Padding="Padding.Is2.OnX.Is3.OnY"
+                           Border="Border.Is2.Secondary.OnAll.Rounded">
+                         <CardBody>
+                             <CardTitle TextColor="TextColor.Dark" Size="3">@miscContext.Symbol</CardTitle>
+                             <CardSubtitle TextColor="TextColor.Muted"
+                                           TextTransform="TextTransform.Capitalize">@miscContext.English</CardSubtitle>
+                             <CardImage data-src="@miscContext.SvgUri"
+                                        data-sizes="auto"
+                                        Style="height: 64px; width: 64px;"
+                                        Alt="@miscContext.English"
+                                        Class="lazyload"/>
+                         </CardBody>
+                     </Card>
+                     </Animate>
+                 </Repeater>
+             </CardDeck>
          </TabPanel>
      </Content>
  </Tabs>
 
  @code {
 
-    [Inject]
-    private ScryfallSymbologyService _symbologyService { get; init; }
-     [Inject] public IMessageService MessageService { get; init; }
+    [Inject] private ScryfallSymbologyService _symbologyService { get; init; }
+    [Inject] private IMessageService MessageService { get; init; }
+
+     [Inject]
+     private ILoadingIndicatorService LoadingIndicatorService { get; init; }
     private List<SymbologyDatum> _symbols = new(200);
 
     private readonly List<SymbologyDatum> _funnySymbols = new(50);
@@ -151,6 +198,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadingIndicatorService.Show();
         if (!StringBuilderPoolFactory<GameSymbols>.Exists(nameof(GameSymbols)))
         {
             StringBuilderPoolFactory<GameSymbols>.Create(nameof(GameSymbols));
@@ -165,6 +213,7 @@
         }
 
         PopulateSymbolInformationAsync(symbolEndPointResponse);
+        await LoadingIndicatorService.Hide();
     }
 
     private async Task OnApiFailureAsync()

@@ -1,12 +1,11 @@
-﻿<Bar Mode="BarMode.VerticalPopout"
+﻿<Bar Mode="BarMode.VerticalInline"
      CollapseMode="BarCollapseMode.Small"
      ThemeContrast="ThemeContrast.Dark"
-     Background="Background.Dark"
      NavigationBreakpoint="Breakpoint.Tablet">
     <BarBrand>
         <BarItem>
             <BarLink To="">
-                <BarIcon IconName="IconName.Dashboard"/>
+                <BarIcon IconName="IconName.Dashboard" />
                 MTG Viewer
             </BarLink>
         </BarItem>
@@ -41,6 +40,46 @@
             </BarItem>
         </BarStart>
         <BarEnd>
+            <BarItem>
+                <BarDropdown>
+                    <BarDropdownToggle>
+                        <BarIcon IconName="IconName.UserCheck" IconStyle="IconStyle.DuoTone" />
+                        App Information
+                    </BarDropdownToggle>
+                    <BarDropdownMenu>
+                    <BarDropdownItem>
+                        <BarIcon IconName="IconName.Code" IconStyle="IconStyle.DuoTone" />
+                        Version:
+                    </BarDropdownItem>
+                    <BarDropdownItem>
+                        <BarIcon IconName="IconName.Copyright" IconStyle="IconStyle.Light" />
+                        The Omen Den
+                    </BarDropdownItem>
+                    <BarDropdownItem>
+                        <BarIcon IconName="IconName.Paperclip" />
+                        License: MIT
+                    </BarDropdownItem>
+                    </BarDropdownMenu>
+                </BarDropdown>
+            </BarItem>
+            <BarItem>
+                <BarDropdown>
+                    <BarDropdownToggle>
+                        <BarIcon IconName="@("fa-gears")" IconStyle="IconStyle.DuoTone" />
+                        Settings
+                    </BarDropdownToggle>
+                    <BarDropdownMenu>
+                        <BarDropdownItem>
+                            <BarIcon IconName="IconName.Language" IconStyle="IconStyle.Solid" />
+                            Language
+                        </BarDropdownItem>
+                        <BarDropdownItem>
+                            <BarIcon IconName="IconName.PaintBrush" />
+                            Theme
+                        </BarDropdownItem>
+                    </BarDropdownMenu>
+                </BarDropdown>
+            </BarItem>
             <BarItem>
                 <BarLink To="contactUs">
                     <BarIcon IconName="IconName.Mail" IconStyle="IconStyle.Regular" />

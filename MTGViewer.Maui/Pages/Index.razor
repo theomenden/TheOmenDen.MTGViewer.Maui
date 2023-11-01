@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using MTGViewer.Maui.Data
+@using Microsoft.EntityFrameworkCore
 
 <Jumbotron Background="Background.Dark"
            Margin="Margin.IsAuto.OnX.Is4.FromTop">
@@ -15,20 +17,80 @@
 <Div Margin="Margin.IsAuto.OnX">
     <Div Flex="Flex.Column.AlignItems.Center" Padding="Padding.Is5.OnY">
         <Div Flex="Flex.Column.AlignItems.Center" TextAlignment="TextAlignment.Center">
-            <Paragraph TextColor="TextColor.Primary" TextWeight="TextWeight.Bold" TextSize="TextSize.Large" Margin="Margin.Is4.FromBottom">
-                Very proud to introduce
-            </Paragraph>
-            <Heading Size="HeadingSize.Is1" TextWeight="TextWeight.Bold" Margin="Margin.Is4.FromBottom">
+            <Heading Size="HeadingSize.Is4" TextWeight="TextWeight.Bold" Margin="Margin.Is4.FromBottom">
                 A MAUI Blazor based Fan project for viewing Magic the Gathering Cards
             </Heading>
             <Div Flex="Flex.Column.Row.OnDesktop.JustifyContent.Center" Gap="Gap.Is2">
-                <Button Color="Color.Primary" Size="Size.Large">
-                    Start now
-                </Button>
-                <Button Color="Color.Secondary" Size="Size.Large">
-                    Take tour
-                </Button>
+                <Row Flex="Flex.AlignItems.Center">
+                    <Column ColumnSize="ColumnSize.IsAuto">
+                        @if (_magicCard is null)
+                        {
+                            <Span>
+                                <SpinKit Type="SpinKitType.Plane" Centered Color="#AF00BF" />
+                             </Span>
+                        }
+                        else
+                        {
+                            <Card Background="Background.Dark"
+                                  TextColor="TextColor.Light"
+                                  Border="Border.Is2.Rounded.Light.OnAll"
+                                  Shadow="Shadow.Default"
+                                  Flex="Flex.AlignItems.Center"
+                                  Width="Width.Is100">
+                                <CardHeader>
+                                    <CardTitle Size="3">
+                                        Random Card
+                                    </CardTitle>
+                                </CardHeader>
+                                <Blazorise.Link To="@($"/cardDetails?cardId={_magicCard?.Id ?? Guid.Empty}")">
+                                    <CardImage Source="@_magicCard?.image_uris.png"
+                                               Alt="@_magicCard?.artist"
+                                               Margin="Margin.Is2.OnX"
+                                               Style="height:30em;width:auto;"
+                                               Border="Border.Is1.Rounded.Light.OnAll" />
+                                </Blazorise.Link>
+                                <CardBody>
+                                    <CardTitle Flex="Flex.InlineFlex.JustifyContent.Center"
+                                               TextWeight="TextWeight.Bold">
+                                        @_magicCard?.name - @_magicCard?.mana_cost
+                                    </CardTitle>
+                                    <CardSubtitle Flex="Flex.Column.JustifyContent.Start">
+                                        <Paragraph>Artwork by: @_magicCard?.artist</Paragraph>
+                                        <Paragraph>Set: @_magicCard?.SetName</Paragraph>
+                                    </CardSubtitle>
+                                    <CardText Italic TextWeight="TextWeight.Bold">
+                                        @_magicCard?.type_line
+                                    </CardText>
+                                    <Text Italic TextWeight="TextWeight.Light">@(_magicCard.card_faces?.FirstOrDefault()?.oracle_text ?? _magicCard.name)</Text>
+                                </CardBody>
+                                    <CardFooter Flex="Flex.Row.JustifyContent.Between">
+                                        <Paragraph>
+                                            Color Identity: @String.Join(", ", _magicCard.color_identity)
+                                        </Paragraph>
+                                    </CardFooter>
+                                </Card>
+                        }
+                    </Column>
+                </Row>
             </Div>
         </Div>
     </Div>
 </Div>
+@code
+{
+    [Inject] private ScryfallCardService ScryfallCardService { get; init; }
+    [Inject] private ScryfallSetInformationService SetInformationService { get; init; }
+    [Inject] private ScryfallSymbologyService SymbologyService { get; init; }
+    [Inject] private ILoadingIndicatorService PageProgressService { get; init; }
+    private ScryfallCard? _magicCard;
+    private String? _setName;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await PageProgressService.Show();
+        var scryfallCardDataResponse = await ScryfallCardService.GetContentAsync(_magicCard?.Id.ToString() ?? String.Empty);
+        _magicCard = scryfallCardDataResponse.Data;
+        await PageProgressService.Hide();
+    }
+
+}

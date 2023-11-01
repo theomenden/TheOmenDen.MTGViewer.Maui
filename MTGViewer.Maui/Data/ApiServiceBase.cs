@@ -2,6 +2,7 @@
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
+using JetBrains.Annotations;
 using TheOmenDen.Shared.Interfaces.Services;
 using TheOmenDen.Shared.Responses;
 
@@ -24,7 +25,7 @@ public abstract class ApiServiceBase<TResponse> : IApiService<TResponse>
     /// <param name="uri">The endpoint we mean to retrieve from</param>
     /// <param name="cancellationToken"></param>
     /// <returns><see cref="ApiResponse"/> of type <typeparamref name="TResponse"/></returns>
-    public virtual async Task<ApiResponse<TResponse>> GetContentAsync(String uri, CancellationToken cancellationToken = default)
+    public virtual async Task<ApiResponse<TResponse>> GetContentAsync([CanBeNull] String uri, CancellationToken cancellationToken = default)
     {
         using var client = ClientFactory.CreateClient(HttpClientConfiguration.Name);
 

@@ -1,13 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MTGViewer.Maui.Data.Scryfall.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
+using JetBrains.Annotations;
 using TheOmenDen.Shared.Extensions;
 using TheOmenDen.Shared.Responses;
 
@@ -25,9 +21,14 @@ public sealed class ScryfallCardService : ApiServiceBase<ScryfallCard>
         _logger = logger;
     }
 
-    public override async Task<ApiResponse<ScryfallCard>> GetContentAsync(String uri, CancellationToken cancellationToken = default)
+    public override async Task<ApiResponse<ScryfallCard>> GetContentAsync([CanBeNull] string uri, CancellationToken cancellationToken = default)
     {
         var apiResponse = new ApiResponse<ScryfallCard>();
+
+        if (string.IsNullOrWhiteSpace(uri))
+        {
+            uri = "random";
+        }
 
         try
         {
