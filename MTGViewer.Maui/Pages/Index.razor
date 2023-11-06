@@ -1,6 +1,5 @@
 ﻿@page "/"
-@using MTGViewer.Maui.Data
-@using Microsoft.EntityFrameworkCore
+@using JetBrains.Annotations
 
 <Jumbotron Background="Background.Dark"
            Margin="Margin.IsAuto.OnX.Is4.FromTop">
@@ -82,8 +81,8 @@
     [Inject] private ScryfallSetInformationService SetInformationService { get; init; }
     [Inject] private ScryfallSymbologyService SymbologyService { get; init; }
     [Inject] private ILoadingIndicatorService PageProgressService { get; init; }
-    private ScryfallCard? _magicCard;
-    private String? _setName;
+    [CanBeNull] private ScryfallCard _magicCard;
+    private String _setName = String.Empty;
 
     protected override async Task OnInitializedAsync()
     {

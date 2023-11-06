@@ -1,10 +1,11 @@
-﻿using Blazorise;
+﻿using System.Reflection;
+using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.LoadingIndicator;
-using Microsoft.EntityFrameworkCore;
+using GraphQL;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using MTGViewer.Maui.Data;
 using MTGViewer.Maui.Extensions;
 using Serilog;
 using Serilog.Events;
@@ -26,10 +27,24 @@ public static class MauiProgram
             .CreateBootstrapLogger();
         try
         {
+            var currentAssembly = Assembly.GetExecutingAssembly();
+            using var stream = currentAssembly.GetManifestResourceStream("MTGViewer.Maui.appsettings.json");
+
+            var appSettingsJson = new ConfigurationBuilder()
+                    .AddJsonStream(stream)
+                     .Build();
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts => { fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular"); });
+
+            builder.Configuration.AddConfiguration(appSettingsJson);
+
+            builder.Services.AddGraphQL(options => options
+                .AddSystemTextJson()
+                .AddSchema<>()
+                .UseMemoryCache());
 
             builder.Services.AddMauiBlazorWebView();
             builder.Services.AddLogging(options => options.AddSerilog(dispose: true));
@@ -43,10 +58,7 @@ public static class MauiProgram
                 .AddFontAwesomeIcons();
             builder.Services.AddLoadingIndicator();
             builder.Services.AddScryfallApiServices();
-            
-            // TODO: Fix this shit
-            //builder.Services.AddPooledDbContextFactory<MtgBlazorDbContext>(options => options.EnableServiceProviderCaching().EnableDetailedErrors()
-            //    .UseSqlite(SqlLiteConstants.DatabasePath));
+
             return builder.Build();
         }
         catch (Exception ex)
