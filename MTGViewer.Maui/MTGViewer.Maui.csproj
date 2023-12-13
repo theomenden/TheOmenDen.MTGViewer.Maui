@@ -119,7 +119,7 @@
 		<PackageReference Include="Fluxor" Version="5.9.1" />
 		<PackageReference Include="Fluxor.Blazor.Web" Version="5.9.1" />
 		<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.9.1" />
-		<PackageReference Include="GraphQL" Version="7.7.0" />
+		<PackageReference Include="GraphQL" Version="7.7.1" />
 		<PackageReference Include="GraphQL-Parser" Version="9.3.1" />
 		<PackageReference Include="GraphQL.Authorization" Version="7.0.0" />
 		<PackageReference Include="GraphQL.Client" Version="6.0.2" />
