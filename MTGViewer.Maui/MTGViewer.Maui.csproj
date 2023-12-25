@@ -180,7 +180,7 @@
 		<PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
 		<PackageReference Include="TheOmenDen.Shared" Version="2023.11.27.49" />
 		<PackageReference Include="TheOmenDen.Shared.Interfaces" Version="2.12.1.48" />
-		<PackageReference Include="TheOmenDen.Shared.Logging" Version="2.3.20.1750" />
+		<PackageReference Include="TheOmenDen.Shared.Logging" Version="2.12.24.2336" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
