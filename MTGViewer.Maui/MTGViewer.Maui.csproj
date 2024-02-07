@@ -126,7 +126,7 @@
 		<PackageReference Include="GraphQL.Client.Abstractions" Version="6.0.2" />
 		<PackageReference Include="GraphQL.Client.Serializer.SystemTextJson" Version="6.0.2" />
 		<PackageReference Include="GraphQL.MemoryCache" Version="7.8.0" />
-		<PackageReference Include="GraphQL.MicrosoftDI" Version="7.7.2" />
+		<PackageReference Include="GraphQL.MicrosoftDI" Version="7.8.0" />
 		<PackageReference Include="GraphQL.Primitives" Version="6.0.2" />
 		<PackageReference Include="GraphQL.SystemReactive" Version="4.8.0" />
 		<PackageReference Include="GraphQL.SystemTextJson" Version="7.7.2" />
