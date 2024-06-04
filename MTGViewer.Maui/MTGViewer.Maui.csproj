@@ -115,7 +115,7 @@
 		<PackageReference Include="Blazorise.QRCode" Version="1.5.3" />
 		<PackageReference Include="Blazorise.Snackbar" Version="1.5.3" />
 		<PackageReference Include="Blazorise.SpinKit" Version="1.5.3" />
-		<PackageReference Include="Blazorise.TreeView" Version="1.5.2" />
+		<PackageReference Include="Blazorise.TreeView" Version="1.5.3" />
 		<PackageReference Include="Fluxor" Version="5.9.1" />
 		<PackageReference Include="Fluxor.Blazor.Web" Version="5.9.1" />
 		<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.9.1" />
