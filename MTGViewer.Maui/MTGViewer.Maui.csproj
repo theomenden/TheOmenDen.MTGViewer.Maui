@@ -118,7 +118,7 @@
 		<PackageReference Include="Blazorise.TreeView" Version="1.5.3" />
 		<PackageReference Include="Fluxor" Version="5.9.1" />
 		<PackageReference Include="Fluxor.Blazor.Web" Version="5.9.1" />
-		<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.9.1" />
+		<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="6.5.2" />
 		<PackageReference Include="GraphQL" Version="7.8.0" />
 		<PackageReference Include="GraphQL-Parser" Version="9.3.1" />
 		<PackageReference Include="GraphQL.Authorization" Version="7.0.0" />
